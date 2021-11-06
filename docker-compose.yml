@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    image: paymentworks-web:0.1
+    tty: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./web:/paymentworks
+      - /web/node_modules
+    networks:
+      - frontend
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: paymentworks-api:0.1
+    command: gunicorn --bind 0.0.0.0:5000 app:app
+    ports:
+      - "5000:5000"
+    volumes:
+      - appdata:/var/www/
+    networks:
+      - frontend
+      - backend
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+volumes:
+  appdata:
+    driver: local

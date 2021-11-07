@@ -18,12 +18,22 @@ function App() {
   const [stops, setStops] = React.useState([]);
 
   React.useEffect(() => {
-    fetchRoutes().then(({ data }) => setSubwayLines(data.routes));
+    fetchRoutes()
+      .then(({ data }) => setSubwayLines(data.routes))
+      .catch((err) => {
+        console.log(err?.response?.description);
+        setSubwayLines([]);
+      });
   }, []);
 
   const handleFetchStops = (routeId) => {
     setStops([]);
-    fetchStops(routeId).then(({ data }) => setStops(data.stops));
+    fetchStops(routeId)
+      .then(({ data }) => setStops(data.stops))
+      .catch((err) => {
+        console.log(err?.response?.description);
+        setStops([]);
+      });
   };
   return (
     <div className="App">

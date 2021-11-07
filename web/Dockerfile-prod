@@ -10,7 +10,7 @@ ENV PATH /paymentworks/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 # Add React app to working directory
-ADD . /paymentworks/
+ADD . /paymentworks
 RUN npm install
 RUN npm install react-scripts -g
 
